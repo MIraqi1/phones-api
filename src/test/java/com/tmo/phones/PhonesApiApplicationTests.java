@@ -1,5 +1,7 @@
 package com.tmo.phones;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +17,19 @@ class PhonesApiApplicationTests {
 	@Autowired
 	TestRestTemplate restTemplate;
 
+	@Autowired
+	PhonesRepository phonesRepository;
+
+	@BeforeEach
+	void setUp() {
+		phonesRepository.save(new Phone("iphone", "11 max", "ios"));
+	}
+
+	@AfterEach
+	void tearDown() {
+		phonesRepository.deleteAll();
+	}
+
 	@Test
 	void contextLoads() {
 	}
@@ -28,6 +43,6 @@ class PhonesApiApplicationTests {
 		// from AssertJ
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody().getMake()).isEqualTo("iphone");
-		assertThat(response.getBody().getModel()).isEqualTo("iphone");
+		assertThat(response.getBody().getModel()).isEqualTo("11 max");
 	}
 }
