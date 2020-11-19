@@ -20,4 +20,8 @@ public class PhonesService {
     }
 
 
+    public Phone addPhone(Phone phone) {
+        phonesRepository.save(phone);
+        return phone;
+    }
 }

@@ -6,8 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -41,4 +45,15 @@ class PhoneServiceTest {
                 () -> phonesService.getPhone("foo")
         ).isInstanceOf(PhoneNotFoundException.class);
     }
+
+    @Test
+    void canAddPhone() {
+        Phone ip12 = new Phone("Apple", "iPhone 12", "ios", LocalDate.of(2020, 11, 15));
+        when(phonesRepository.save(ip12)).thenReturn(ip12);
+
+        Phone actual = phonesService.addPhone(ip12);
+
+        assertEquals(ip12, actual);
+    }
+
 }

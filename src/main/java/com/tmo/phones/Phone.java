@@ -1,6 +1,7 @@
 package com.tmo.phones;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "phones")
@@ -11,6 +12,7 @@ public class Phone {
     private String make;
     private String model;
     private String os;
+    private LocalDate releaseDate;
 
     public Phone() {
     }
@@ -19,6 +21,13 @@ public class Phone {
         this.make = make;
         this.model = model;
         this.os = os;
+    }
+
+    public Phone(String make, String model, String os, LocalDate releaseDate) {
+        this.make = make;
+        this.model = model;
+        this.os = os;
+        this.releaseDate = releaseDate;
     }
 
     public Long getId() {
@@ -51,5 +60,13 @@ public class Phone {
 
     public void setOs(String os) {
         this.os = os;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

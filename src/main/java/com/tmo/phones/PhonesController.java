@@ -1,9 +1,12 @@
 package com.tmo.phones;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/phones")
 public class PhonesController {
 
     PhonesService phonesService;
@@ -12,10 +15,18 @@ public class PhonesController {
         this.phonesService = phonesService;
     }
 
-    @GetMapping("/phones/{make}")
+    @GetMapping("/{make}")
     public Phone getPhoneDetails(@PathVariable String make) {
         // get from the service layer (api)
         return phonesService.getPhone(make);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Phone> addPhone (@Validated @RequestBody Phone phone)
+    {
+        //code
+        phonesService.addPhone(phone);
+        return new ResponseEntity<Phone>(phone, HttpStatus.CREATED);
     }
 
     @ExceptionHandler
