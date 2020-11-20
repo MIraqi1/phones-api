@@ -27,24 +27,24 @@ class PhoneServiceTest {
         phonesService = new PhonesService(phonesRepository);
     }
 
-    @Test
-    void getPhone_exists_returnsDetails() {
-        when(phonesRepository.findPhoneByMake(anyString()))
-                .thenReturn(new Phone("iphone", "11 max", "ios"));
-
-        Phone phone = phonesService.getPhone("iphone");
-        assertThat(phone).isNotNull();
-        assertThat(phone.getMake()).isEqualTo("iphone");
-        assertThat(phone.getModel()).isEqualTo("11 max");
-    }
-
-    @Test
-    void getPhone_notExists_throwsError() {
-        when(phonesRepository.findPhoneByMake(anyString())).thenReturn(null);
-        assertThatThrownBy(
-                () -> phonesService.getPhone("foo")
-        ).isInstanceOf(PhoneNotFoundException.class);
-    }
+    ///    @Test
+//    void getPhone_exists_returnsDetails() {
+//        when(phonesRepository.findPhoneByMake(anyString()))
+//                .thenReturn(new Phone("iphone", "11 max", "ios"));
+//
+//        Phone phone = phonesService.getPhone("iphone");
+//        assertThat(phone).isNotNull();
+//        assertThat(phone.getMake()).isEqualTo("iphone");
+//        assertThat(phone.getModel()).isEqualTo("11 max");
+//    }
+//
+//    @Test
+//    void getPhone_notExists_throwsError() {
+//        when(phonesRepository.findPhoneByMake(anyString())).thenReturn(null);
+//        assertThatThrownBy(
+//                () -> phonesService.getPhone("foo")
+//        ).isInstanceOf(PhoneNotFoundException.class);
+//    }
 
     @Test
     void canAddPhone() {

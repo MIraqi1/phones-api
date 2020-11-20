@@ -3,6 +3,7 @@ package com.tmo.phones;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PhonesService {
@@ -11,16 +12,6 @@ public class PhonesService {
     public PhonesService(PhonesRepository phonesRepository) {
         this.phonesRepository = phonesRepository;
     }
-
-    public Phone getPhone(String make) {
-        Phone phone = phonesRepository.findPhoneByMake(make);
-        if(phone == null) {
-            throw new PhoneNotFoundException();
-        } else {
-            return phone;
-        }
-    }
-
 
     public Phone addPhone(Phone phone) {
         phonesRepository.save(phone);
@@ -34,5 +25,15 @@ public class PhonesService {
         } else {
             return phones;
         }
+    }
+
+    public void deletePhone(Long id) {
+        phonesRepository.deleteById(id);
+
+    }
+
+    public Phone getPhone(Long id) {
+        Optional<Phone> phone = phonesRepository.findById(id);
+        return phone.orElse(null);
     }
 }

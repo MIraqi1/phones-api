@@ -34,15 +34,15 @@ class PhonesApiApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test
-	void getPhoneDetails_returnsPhoneDetails() {
-
-		// access and api and receive details about a phone
-		ResponseEntity<Phone> response = restTemplate.getForEntity("/api/phones/iphone", Phone.class);
-
-		// from AssertJ
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody().getMake()).isEqualTo("iphone");
-		assertThat(response.getBody().getModel()).isEqualTo("11 max");
-	}
+//	@Test
+//	void getPhoneDetails_returnsPhoneDetails() {
+//
+//		// access and api and receive details about a phone
+//		ResponseEntity<Phone> response = restTemplate.getForEntity("/api/phones/iphone", Phone.class);
+//
+//		// from AssertJ
+//		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+//		assertThat(response.getBody().getMake()).isEqualTo("iphone");
+//		assertThat(response.getBody().getModel()).isEqualTo("11 max");
+//	}
 }

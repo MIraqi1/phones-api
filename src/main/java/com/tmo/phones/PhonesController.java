@@ -18,14 +18,24 @@ public class PhonesController {
     }
 
     @GetMapping()
-    public List<Phone> findAllPhones() {
-        return phonesService.findAllPhones();
+    public ResponseEntity<List<Phone>> findAllPhones() {
+        List<Phone> phones= phonesService.findAllPhones();
+        if(phones.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }else {
+            return ResponseEntity.ok(phones);
+        }
     }
 
-    @GetMapping("/{make}")
-    public Phone getPhoneDetails(@PathVariable String make) {
-        // get from the service layer (api)
-        return phonesService.getPhone(make);
+    @GetMapping("/{id}")
+    public ResponseEntity<Phone> getPhoneById(@PathVariable Long id) {
+        Phone phone = phonesService.getPhone(id);
+        if(phone == null){
+            return ResponseEntity.noContent().build();
+        }else {
+            return ResponseEntity.ok(phone);
+        }
+
     }
 
     @PostMapping()
@@ -36,9 +46,17 @@ public class PhonesController {
         return new ResponseEntity<Phone>(phone, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        phonesService.deletePhone(id);
+        return ResponseEntity.ok("Phone was removed successfully!");
+    }
+
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void phoneNotFoundHandler(PhoneNotFoundException phoneNotFoundException) {
 
     }
+
 }

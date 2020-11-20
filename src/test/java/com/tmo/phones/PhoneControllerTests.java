@@ -14,11 +14,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,23 +37,23 @@ public class PhoneControllerTests {
     @MockBean
     PhonesService phonesService;
 
-    @Test
-    void getPhone_phoneExists_returnPhoneDetails() throws Exception {
-
-        when(phonesService.getPhone(anyString())).thenReturn(new Phone("iphone", "11 max", "ios"));
-        mockMvc.perform(get(apiUrl + "/iphone"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("make").value("iphone"))
-                .andExpect(jsonPath("model").value("11 max"));
-    }
-
-    @Test
-    void getPhone_notExists_returnsNoContent() throws Exception {
-        when(phonesService.getPhone(anyString())).thenThrow(new PhoneNotFoundException());
-
-        mockMvc.perform(get(apiUrl + "/foo"))
-                .andExpect(status().isNoContent());
-    }
+//    @Test
+//    void getPhone_phoneExists_returnPhoneDetails() throws Exception {
+//
+//        when(phonesService.getPhone(anyString())).thenReturn(new Phone("iphone", "11 max", "ios"));
+//        mockMvc.perform(get(apiUrl + "/iphone"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("make").value("iphone"))
+//                .andExpect(jsonPath("model").value("11 max"));
+//    }
+//
+//    @Test
+//    void getPhone_notExists_returnsNoContent() throws Exception {
+//        when(phonesService.getPhone(anyString())).thenThrow(new PhoneNotFoundException());
+//
+//        mockMvc.perform(get(apiUrl + "/foo"))
+//                .andExpect(status().isNoContent());
+//    }
 
     @Test
     void addNewPhone_returnPhone() throws Exception{
@@ -81,5 +79,17 @@ public class PhoneControllerTests {
 
         mockMvc.perform(get(apiUrl))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void removePhoneById() throws Exception{
+        mockMvc.perform(delete(apiUrl + "/12")).andExpect(status().isOk());
+    }
+    @Test
+    void getPhoneById_returnsPhone() throws Exception {
+        when(phonesService.getPhone(anyLong())).thenReturn(new Phone("pixel", "5", "android", LocalDate.now()));
+        mockMvc.perform(get(apiUrl + "/12"))
+                .andExpect(status().isOk());
+
     }
 }
