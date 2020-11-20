@@ -2,6 +2,8 @@ package com.tmo.phones;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PhonesService {
 
@@ -23,5 +25,14 @@ public class PhonesService {
     public Phone addPhone(Phone phone) {
         phonesRepository.save(phone);
         return phone;
+    }
+
+    public List<Phone> findAllPhones() {
+        List<Phone> phones =  phonesRepository.findAll();
+        if(phones.isEmpty()) {
+            throw new PhoneNotFoundException();
+        } else {
+            return phones;
+        }
     }
 }

@@ -9,9 +9,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -65,5 +66,20 @@ public class PhoneControllerTests {
                 .content(mapper.writeValueAsString(phone)))
                 .andExpect(status().isCreated());
 
+    }
+
+    @Test
+    void getPhones_returnsListOfPhones() throws Exception{
+        List<Phone> phones = new ArrayList<>();
+        phones.add(new Phone("iphone", "12", "ios", LocalDate.now()));
+        phones.add(new Phone("iphone", "se", "ios", LocalDate.now()));
+        phones.add(new Phone("galaxy", "8", "android", LocalDate.now()));
+        phones.add(new Phone("galaxy", "11", "android", LocalDate.now()));
+        phones.add(new Phone("pixel", "5", "android", LocalDate.now()));
+
+        when(phonesService.findAllPhones()).thenReturn(phones);
+
+        mockMvc.perform(get(apiUrl))
+                .andExpect(status().isOk());
     }
 }
